@@ -1,0 +1,127 @@
+html,body {height:100%;}
+div.container-full{width: 100%;padding: 0 20px;}
+div#content{padding-bottom:60px !important;min-width: 0;min-height: 0;}
+1vw = 1% of viewport width
+
+1vh = 1% of viewport height
+
+1vmin = 1vw or 1vh, whichever is smaller
+
+1vmax = 1vw or 1vh, whichever is larger
+
+h1 {font-size: 8vw;}
+h2{font-size: 6vh;}
+h3{font-size: 5vh;}
+h4{font-size: 4vh;}
+
+div#footer{position:absolute;bottom:0;width:100%;padding:0;}
+
+h1, h2, h3{margin-top: 15px;}
+
+/**************************************/
+/*MENU*/
+/**************************************/
+#UserAvatar{height:53px;display:inline;padding: 5px 0;}
+
+.user-avatar{border-radius:3px;}
+
+.navbar{border-radius:0;}
+.navbar-brand{padding:5px 20px 5px 5px;}
+.breadcrumb{margin: 55px 0 0 0;}
+	.breadcrumb>li{font-size:12px;}
+
+.navbar-toggle{margin: 0 0 0 -5px;}
+
+/**************************************/
+/*NOTIFICACIONES*/
+/**************************************/
+@media (max-width: 767px) {
+	.ui-pnotify-history-container{display:none;}
+	.pine_mobile {top:0;left:0;width: 100% !important;}
+		.pine_mobile .ui-pnotify-container{font-size:10px;border-radius:0;}
+			.pine_mobile .ui-pnotify-closer,.ui-pnotify-icon,.ui-pnotify-sticker{font-size:15px;}
+}
+
+/**************************************/
+/*LOGIN*/
+/**************************************/
+.login-bg-sm{
+	background: #1abc9c url('img/bg.jpg') no-repeat center center;
+	height: 100%;
+	width: 100%;
+	position: fixed;
+}
+
+.login-bg{
+	background: #1abc9c url('img/bg.jpg') no-repeat center center;
+	height: 100%;
+	width: 100%;
+	position: fixed;
+}
+
+.login-screen{
+	position:absolute;
+    top:30%;
+    margin-top: -100px;
+    height: 100%;
+	width: 100%;
+	padding:0;
+	background: none;
+}
+
+.login-icon{
+	left: 0;
+	position: relative;
+	top: 0;
+	width: 128px;
+	float: right;
+}
+
+.login-form{width: 400px;}
+	.login-form:before{top: 55px;}
+
+ .login-title{background: url('img/black_glass.png') repeat;}
+
+/**************************************/
+/*NOTIFICACIONES*/
+/**************************************/
+.ui-pnotify-title {font-size:20px;}
+.ui-pnotify-text {font-size: 14px;}
+
+/**************************************/
+/*TABLES*/
+/**************************************/
+table.table-middle tbody td{vertical-align: middle;}
+
+/**************************************/
+/*FILEUPLOAD*/
+/**************************************/
+.fileupload{position:relative;text-align:center;}
+	.fileupload .fileupload-preview{width:200px;height:200px;}
+	.fileupload .thumbnail > img{display:block;}
+	.fileupload .fileupload-info{position:absolute;top:-1px;left:1;z-index:1;color:#16a085;}
+
+/**************************************/
+/*ROLES*/
+/**************************************/
+div.roleBox{background-color: #f1f1f1;border-radius:5px;padding-bottom:5px;}
+	div.roleBox .roleTitle{border-bottom:1px solid silver;width: 100%;display: block;font-weight:bold;}
+ul.roles{list-style: none;padding-left:0;margin-top: 10px;}
+	ul.roles li{display:inline-block;cursor:pointer;padding-right: 15px;}
+
+/**************************************/
+/*LISTADO MOVIL*/
+/**************************************/
+div.popAction{position:fixed;height:100%;width:100%;z-index:10;background:url('img/black_glass.png') repeat left top;left:0;top:0;display:none;}
+	div.popAction .popBox{position:absolute;padding: 73px 20px 0 20px;width:100%;}
+	div.popAction .closePop{position:absolute;bottom:0;border-radius:0;}
+
+/**************************************/
+/*PROPIEDADES*/
+/**************************************/
+.hand{cursor:pointer;}
+.inline{display:inline !important;}
+.valign-top{vertical-align: top !important;}
+.noresize{resize:none;}
+.nopadleft{padding-left:0;}
+.nopadside{padding-left:0;padding-right:0;}
