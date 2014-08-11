@@ -53,6 +53,7 @@ class Phpbb
             $this->activo =false;
         }
 		
+        $this->CI->db = $this->CI->load->database('foro', TRUE);
     }
 
     /**
@@ -170,7 +171,6 @@ class Phpbb
         $this->CI->db->limit(1);
 
         $query = $this->CI->db->get();
-
         if ($query->num_rows() == 1)
         {
             return $query->row_array();
@@ -319,15 +319,17 @@ class Phpbb
         return submit_post('post', $subject, '', POST_NORMAL, $poll, $data);
     }
 	
-	public function addUser($UsuarioNombre, $UsuarioCorreo, $UsuarioClave) {
+	public function addUser($UsuarioNombre, $UsuarioCorreo, $UsuarioClave, $RequireActivation = false) {
         if($this->activo){
+            if($RequireActivation){$UsuarioEstado = USER_INACTIVE;}else{$UsuarioEstado = USER_NORMAL;}
+
     		$user_row = array(
                 'username' => $UsuarioNombre,
                 'user_email' => $UsuarioCorreo,
                 'user_password' => phpbb_hash($UsuarioClave),
                 'user_newpasswdstring' => '',
                 'group_id' => 2,
-                'user_type' => USER_NORMAL,
+                'user_type' => $UsuarioEstado,
                 'user_new' => 1,
                 'user_avatar' => base_url('avatar/'.$UsuarioNombre),
                 'user_avatar_type' => 2,
@@ -340,8 +342,18 @@ class Phpbb
         }
     }
 
-    public function deleteUser($user_id){
-        return user_delete('remove', $user_id);
+    public function activateUser($UsuarioNick){
+        $Usuario = $this->getUserByName($UsuarioNick);
+        if($Usuario){
+            user_active_flip("activate",$Usuario['user_id']);
+        }
+    }
+
+    public function deleteUser($UsuarioNick){
+        $Usuario = $this->getUserByName($UsuarioNick);
+        if($Usuario){
+            user_delete("remove",$Usuario['user_id']);
+        }
     } 
 }
 

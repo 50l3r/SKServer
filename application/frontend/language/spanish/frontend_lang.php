@@ -5,7 +5,7 @@ if($CI->config->item('online_mode')){$Mode = "Online";}else{$Mode = "Offline";}
 if($CI->config->item('invitaciones_default')){$Invitaciones = "Activas";}else{$Invitaciones = "Desactivadas";}
 
 //INICIO
-$lang['inicio_titulo'] = $CI->config->item('marca').", tu servidor minecraft realizado con SKServer";
+$lang['inicio_titulo'] = $CI->config->item('marca').", tu servidor minecraft realizado con <a href='https://github.com/50l3r/SKServer' target='_blank'>SKServer</a>";
 $lang['inicio_noticia'] = 'Estamos en fase de pruebas. Actualmente no tenemos ningun servicio operativo. Servidor, foro y web permaneceran en desarrollo hasta previo avio. Mas info en <a href="http://twitter.com/50l3r" target="_blank"><b>@50l3r</b></a>';
 
 $lang['inicio_box1_icon'] = "fa-laptop";
@@ -14,7 +14,7 @@ $lang['inicio_box1_desc'] = "<b>IP:</b> ".$CI->config->item('server_ip').":".$CI
 
 $lang['inicio_box2_icon'] = "fa-bitbucket";
 $lang['inicio_box2_title'] = "Crea tu perfil minecraft";
-$lang['inicio_box2_desc'] = "Elige un nombre de usuario y rellena tus datos personales. Estos datos serán los que despues utilices a la hora de entrar a jugar en el servidor.";
+$lang['inicio_box2_desc'] = "Elige un nombre de usuario y rellena tus datos personales. Estos datos serán los que despues utilices a la hora de acceder al servidor.";
 
 $lang['inicio_box3_icon'] = "fa-users";
 $lang['inicio_box3_title'] = "Avisa a tus amigos";
@@ -37,9 +37,8 @@ $lang['registro_help2'] = "Obten Ayuda";
 $lang['registro_invitacion_needcode'] = "Introduce tu código de invitación primero";
 $lang['registro_invitacion_verify'] = "Verifica tu código de invitación antes de registrarte";
 $lang['registro_invitacion_by'] = "Invitado por:";
-
-
 $lang['registro_invitacion_code'] = "Código de invitación";
 $lang['registro_invitacion_ph_code'] = "Tu código de invitación";
 $lang['registro_invitacion_submit_verify'] = "Verificar código";
+
 ?>

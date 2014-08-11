@@ -63,6 +63,7 @@ $route['registro'] = 'registro/index';
 $route['registro/(:any)'] = 'registro/index/$1';
 $route['crear-usuario'] = 'registro/addUsuario';
 $route['nuevo-usuario'] = 'registro/addUsuarioUnlock';
+$route['activar/(:any)/(:any)'] = "registro/activarUsuario/$1/$2";
 $route['checkInvitCode'] = 'registro/checkInvitCode';
 $route['checkAvailable'] = 'registro/checkAvailable';
 $route['checkPremium'] = 'registro/checkPremium';

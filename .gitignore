@@ -213,3 +213,11 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+# SVN
+.svn
+
+#OTROS
+img/avatares/*.png
+application/backend/logs/*.php
+application/frontend/logs/*.php

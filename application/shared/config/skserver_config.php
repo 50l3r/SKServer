@@ -2,8 +2,7 @@
  
 $CI =&get_instance();
 $config['dominio']   = "http://".$_SERVER['SERVER_NAME'];
-
-
+$config['absolute_base'] = str_replace("\\","/",FCPATH);
 
 //***************************************************************************************************************
 // CONFIGURACION BASICA
@@ -12,8 +11,6 @@ $config['dominio']   = "http://".$_SERVER['SERVER_NAME'];
 //////////////////////////////////////////////////////////////////////
 //CONFIGURACION DEL SISTEMA
 //////////////////////////////////////////////////////////////////////
-$config['produccion'] = false; //¿Servidor de pruebas o produccion?
-
 $config['marca']   = "SKServer Demo"; //Nombre de marca
 $config['eslogan']   = "SKServer Demo, tu servidor minecraft de toda la vida."; //Eslogan del servidor
 //////////////////////////////////////////////////////////////////////
@@ -21,15 +18,15 @@ $config['eslogan']   = "SKServer Demo, tu servidor minecraft de toda la vida."; 
 //////////////////////////////////////////////////////////////////////
 //  CORREO
 //////////////////////////////////////////////////////////////////////
-$config['email_buzon'] = "info@skimdoo.com"; //Email de contacto
-$config['email_mensajero'] = "noreply@skimdoo.com"; //Email de envío de correos
+$config['email_buzon'] = "contacto@ejemplo.com"; //Email de contacto
+$config['email_mensajero'] = "noreply@ejemplo.com"; //Email de envío de correos
 
 $config['parametros_correo'] = array(
   'protocol' => 'smtp',
   'smtp_host' => 'ssl://in.mailjet.com',
   'smtp_port' => 465,
-  'smtp_user' => '%%%REMPLAZAME%%%', //Usuario de Mailjet
-  'smtp_pass' => '%%%REMPLAZAME%%%', //Clave de Mailjet
+  'smtp_user' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', //Usuario de Mailjet
+  'smtp_pass' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', //Clave de Mailjet
   'mailtype' => 'html',
 );
 
@@ -37,7 +34,7 @@ $config['parametros_correo'] = array(
 //  REGISTRO
 //////////////////////////////////////////////////////////////////////
 $config['reg_enable'] = true; //Habilitar registro
-$config['forum_enable'] = false; //Habilitar sincronizacion de usuarios con phpbb3
+$config['forum_enable'] = true; //Habilitar sincronizacion de usuarios con phpbb3
 $config['invit_enable'] = false; //Habilitar sistema de invitaciones
 $config['online_mode'] = false; //Servidor Online/Offline
 $config['invitaciones_default']   = 10; //Invitaciones disponibles para cada usuario
@@ -49,18 +46,12 @@ $config['server_ip'] = "skimdoo.com"; //Direccion ip o dominio del servidor
 $config['server_version'] = "1.7.4"; //Versión del servidor
 $config['server_port'] = 25565; //Puerto del servidor
 $config['server_statcache'] = 300; //Actualización de estadisticas del servidor en segundos
+
 //////////////////////////////////////////////////////////////////////
 //  FORO
 //////////////////////////////////////////////////////////////////////
-if($config['produccion']===true){ //produccion
-  $config['PHPBB-ROOT'] = '/home/www/skimdoo/foro/'; //Ruta absoluta del foro
-  $config['PHPBB-PREFIX'] = "phpbb"; //Prefijo de tabla db foro
-}else{ //pruebas
-  $config['PHPBB-ROOT'] = "W:/Personal/workdir/Skimdoo/foro/"; //Ruta absoluta del foro
-  $config['PHPBB-PREFIX'] = "phpbb"; //Prefijo de tabla db foro
-}
-
-
+$config['PHPBB-ROOT'] = $config['absolute_base']."foro/";
+$config['PHPBB-PREFIX'] = "phpbb"; //Prefijo de tabla db foro
 
 
 //***************************************************************************************************************
@@ -71,13 +62,8 @@ if($config['produccion']===true){ //produccion
 //////////////////////////////////////////////////////////////////////
 //  IMAGENES
 //////////////////////////////////////////////////////////////////////
-if($config['produccion']===true){ //produccion
-    $config['imgrack_apath'] = "/home/www/skimdoo/img"; //Ruta absoluta de carpeta "img"
-    $config['upload_path'] = "/home/www/skimdoo/img/uploads"; //Ruta absoluta de carpeta "img/uploads"
-}else{ //pruebas
-    $config['imgrack_apath'] = "W:/Personal/workdir/Skimdoo/img"; //Ruta absoluta de carpeta "img"
-    $config['upload_path'] = "W:/Personal/workdir/Skimdoo/img/uploads"; //Ruta absoluta de carpeta "img/uploads"
-}
+$config['imgrack_apath'] = $config['absolute_base']."img"; //Ruta absoluta de carpeta "img"
+$config['upload_path'] =  $config['absolute_base']."img/uploads"; //Ruta absoluta de carpeta "img/uploads"
 
 //////////////////////////////////////////////////////////////////////
 // REGLAS DE IMAGENES

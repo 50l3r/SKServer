@@ -71,11 +71,15 @@ class Registro extends Skserver_Controller{
 						$Online_mode = $this->config->item('online_mode');
 						if($Online_mode){
 							$paid = $this->checkPremium($UsuarioNick);
+							$RequireActivation = false;
+
 							if(!$paid){set_error("037","registro");}
+						}else{
+							$RequireActivation = true;
 						}
 
 						$UsuarioCorreo = $invit->InvitacionEmail;
-						$useradd = $this->usuarios_model->addUsuario($UsuarioNick, $UsuarioCorreo);
+						$useradd = $this->usuarios_model->addUsuario($UsuarioNick, $UsuarioCorreo, 2, $RequireActivation);
 
 						if($useradd){
 							$this->invitaciones_model->setStatusInvitCode($InvitCode);
@@ -84,32 +88,51 @@ class Registro extends Skserver_Controller{
 							$pass = $useradd['Clave'];
 
 							$PHPBB_Mode = $this->config->item('forum_enable');
-
 							if($PHPBB_Mode){
 								$this->load->library('phpbb');
-                				$this->phpbb->addUser($UsuarioNick, $UsuarioCorreo, $pass);
+                				$this->phpbb->addUser($UsuarioNick, $UsuarioCorreo, $pass, $RequireActivation);
 							}
-							
-							$datos = array(
-					            'UsuarioNick' => $UsuarioNick,
-					            'UsuarioClave' => $pass
-					        );
-					        
-					        $this->load->library('email', $this->config->item('parametros_correo'));
+
+							$this->load->library('email', $this->config->item('parametros_correo'));
 					        $this->email->set_newline("\r\n");
 
 					        $this->email->from($this->config->item('email_mensajero'), $this->config->item('marca'));
 					        $this->email->to($UsuarioCorreo);
 
-					        $this->email->subject($this->config->item('marca').' - '.$this->lang->line('correo_altaus_subject'));
+							if($RequireActivation){
+								$Activacion = $useradd['Activacion'];
+								$datos = array(
+						            'UsuarioNick' => $UsuarioNick,
+						            'UsuarioClave' => $pass,
+						            'AUrl' => base_url('activar/'.$UsuarioNick.'/'.$Activacion),
+						        );
 
-					        $this->email->message($this->load->view('correo/alta_usuario', $datos, true));
+						        $this->email->subject($this->config->item('marca').' - '.$this->lang->line('correo_actus_subject'));
 
-					        if (!$this->email->send()){
-					        	set_error("030",$RUrl);		
-					        }else{
-					         	set_error("031",'inicio',false,'success');
-					        }
+						        $this->email->message($this->load->view('correo/activacion_usuario', $datos, true));
+
+						        if (!$this->email->send()){
+						        	set_error("030",$RUrl);		
+						        }else{
+						         	set_error("042",'inicio',false,'success');
+						        }
+								
+							}else{
+								$datos = array(
+						            'UsuarioNick' => $UsuarioNick,
+						            'UsuarioClave' => $pass
+						        );
+
+						        $this->email->subject($this->config->item('marca').' - '.$this->lang->line('correo_altaus_subject'));
+
+						        $this->email->message($this->load->view('correo/alta_usuario', $datos, true));
+
+						        if (!$this->email->send()){
+						        	set_error("030",$RUrl);		
+						        }else{
+						         	set_error("031",'inicio',false,'success');
+						        }
+						    }
 						}else{
 							set_error("007",$RUrl);
 						}
@@ -152,10 +175,13 @@ class Registro extends Skserver_Controller{
 					$Online_mode = $this->config->item('online_mode');
 					if($Online_mode){
 						$paid = $this->checkPremium($UsuarioNick);
+						$RequireActivation = false;
 						if(!$paid){set_error("037","registro");}
+					}else{
+						$RequireActivation = true;
 					}
 
-					$useradd = $this->usuarios_model->addUsuario($UsuarioNick, $UsuarioCorreo);
+					$useradd = $this->usuarios_model->addUsuario($UsuarioNick, $UsuarioCorreo, 2, $RequireActivation);
 
 					if($useradd){
 						$UsuarioId = $useradd['UsuarioId'];
@@ -165,7 +191,7 @@ class Registro extends Skserver_Controller{
 
 						if($PHPBB_Mode){
 							$this->load->library('phpbb');
-            				$this->phpbb->addUser($UsuarioNick, $UsuarioCorreo, $pass);
+            				$this->phpbb->addUser($UsuarioNick, $UsuarioCorreo, $pass, $RequireActivation);
 						}
 						
 						$datos = array(
@@ -179,15 +205,36 @@ class Registro extends Skserver_Controller{
 				        $this->email->from($this->config->item('email_mensajero'), $this->config->item('marca'));
 				        $this->email->to($UsuarioCorreo);
 
-				        $this->email->subject($this->config->item('marca').' - '.$this->lang->line('correo_altaus_subject'));
+				        if($RequireActivation){
+							$Activacion = $useradd['Activacion'];
+							$datos = array(
+					            'UsuarioNick' => $UsuarioNick,
+					            'UsuarioClave' => $pass,
+					            'AUrl' => base_url('activar/'.$UsuarioNick.'/'.$Activacion),
+					        );
 
-				        $this->email->message($this->load->view('correo/alta_usuario', $datos, true));
+					        $this->email->subject($this->config->item('marca').' - '.$this->lang->line('correo_actus_subject'));
 
-				        if (!$this->email->send()){
-				        	set_error("030","registro");		
-				        }else{
-				         	set_error("031",'inicio',false,'success');
-				        }
+					        $this->email->message($this->load->view('correo/activacion_usuario', $datos, true));
+
+					        if (!$this->email->send()){
+					        	set_error("030",'registro');		
+					        }else{
+					         	set_error("042",'inicio',false,'success');
+					        }
+							
+						}else{
+
+					        $this->email->subject($this->config->item('marca').' - '.$this->lang->line('correo_altaus_subject'));
+
+					        $this->email->message($this->load->view('correo/alta_usuario', $datos, true));
+
+					        if (!$this->email->send()){
+					        	set_error("030","registro");		
+					        }else{
+					         	set_error("031",'inicio',false,'success');
+					        }
+					    }
 					}else{
 						set_error("007","registro");
 					}
@@ -197,6 +244,28 @@ class Registro extends Skserver_Controller{
 			set_error("028",'inicio');
 		}
 	}
+
+	public function activarUsuario($UsuarioNick=null,$Activacion=null){
+        if(empty($UsuarioNick) || empty($Activacion)){redirect(base_url('/errores/404/'),'location');}
+
+        $this->load->model('usuarios_model');
+        $usuario = $this->usuarios_model->get(null, $UsuarioNick);
+
+        if($usuario->UsuarioEstado!=0){
+            set_error("044",'registro');
+        }else{
+            if ($usuario->UsuarioRestablecer != $Activacion) {
+                set_error("007",'registro');
+            }else{
+                $this->usuarios_model->activarUsuario($usuario->UsuarioId);
+
+                $this->load->library('phpbb');
+                $this->phpbb->activateUser($usuario->UsuarioNick);
+
+                set_error("043",'inicio',false,'success');
+            }
+        }
+    }
 
 
 	public function checkPremium($UsuarioNick){ //Verificar si el usuario es premium

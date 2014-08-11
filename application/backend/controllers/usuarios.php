@@ -192,11 +192,7 @@ class Usuarios extends Skserver_Controller{
 
               if($PHPBB_Mode){
                 $this->load->library('phpbb');
-                $this->load->model('Phpbbuser_model');
-                $phpbb_user = $this->Phpbbuser_model->get_user($Usuario->UsuarioNick);
-                if($phpbb_user){
-                  $this->phpbb->deleteUser($phpbb_user->user_id);
-                }
+                $this->phpbb->deleteUser($Usuario->UsuarioNick);
               }
 
               set_error("012",'usuarios',false,'success');

@@ -33,7 +33,7 @@
             </div>
 
             <input type="submit" class="btn btn-inverse btn-lg btn-block" value="Entrar">
-            <a class="login-link" href="#">¿Olvidaste tu contraseña?</a>
+            <a class="login-link" href="<?= base_url('../foro/ucp.php?mode=sendpassword')?>">¿Olvidaste tu contraseña?</a>
           </form>
         </div>
       </div>
